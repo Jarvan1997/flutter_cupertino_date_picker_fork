@@ -232,6 +232,8 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
           scrollController: scrollCtrl,
           itemExtent: widget.pickerTheme.itemHeight,
           selectionOverlay: null,
+          diameterRatio: 1.5,
+          squeeze: 1.2,
           onSelectedItemChanged: valueChanged,
           childCount: valueRange?.last == null || valueRange?.first == null
               ? null

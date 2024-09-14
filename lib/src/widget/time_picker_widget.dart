@@ -235,6 +235,8 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
           scrollController: scrollCtrl,
           itemExtent: widget.pickerTheme.itemHeight,
           selectionOverlay: null,
+          diameterRatio: 1.5,
+          squeeze: 1.2,
           onSelectedItemChanged: valueChanged,
           childCount: format.contains('m')
               ? _calculateMinuteChildCount(valueRange, minuteDivider)
