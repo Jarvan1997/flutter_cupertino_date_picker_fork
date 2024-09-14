@@ -292,6 +292,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
         backgroundColor: widget.pickerTheme.backgroundColor,
         scrollController: scrollCtrl,
         itemExtent: widget.pickerTheme.itemHeight,
+        selectionOverlay: null,
         onSelectedItemChanged: valueChanged,
         childCount: format.contains('m')
             ? _calculateMinuteChildCount(valueRange, minuteDivider!)

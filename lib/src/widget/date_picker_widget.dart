@@ -231,6 +231,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
           backgroundColor: widget.pickerTheme.backgroundColor,
           scrollController: scrollCtrl,
           itemExtent: widget.pickerTheme.itemHeight,
+          selectionOverlay: null,
           onSelectedItemChanged: valueChanged,
           childCount: valueRange?.last == null || valueRange?.first == null
               ? null
