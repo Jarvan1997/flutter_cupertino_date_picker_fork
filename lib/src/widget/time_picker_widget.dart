@@ -230,26 +230,28 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
         padding: EdgeInsets.all(8.0),
         height: widget.pickerTheme.pickerHeight,
         decoration: BoxDecoration(color: widget.pickerTheme.backgroundColor),
-        child: CupertinoPicker.builder(
-          backgroundColor: widget.pickerTheme.backgroundColor,
-          scrollController: scrollCtrl,
-          itemExtent: widget.pickerTheme.itemHeight,
-          selectionOverlay: null,
+        child: ListWheelScrollView.useDelegate(
           diameterRatio: 1.5,
+          itemExtent: widget.pickerTheme.itemHeight,
           squeeze: 1.2,
+          physics: const FixedExtentScrollPhysics(),
+          controller: scrollCtrl,
           onSelectedItemChanged: valueChanged,
-          childCount: format.contains('m')
-              ? _calculateMinuteChildCount(valueRange, minuteDivider)
-              : valueRange.last - valueRange.first + 1,
-          itemBuilder: (context, index) {
-            int value = valueRange.first + index;
+          childDelegate: ListWheelChildBuilderDelegate(
+            builder: (context, index) {
+              int value = valueRange.first + index;
 
-            if (format.contains('m')) {
-              value = minuteDivider * index + valueRange.first;
-            }
+              if (format.contains('m')) {
+                value = minuteDivider * index + valueRange.first;
+              }
 
-            return _renderDatePickerItemComponent(value, format);
-          },
+              return _renderDatePickerItemComponent(value, format);
+            },
+            childCount:
+            format.contains('m')
+                ? _calculateMinuteChildCount(valueRange, minuteDivider)
+                : valueRange.last - valueRange.first + 1,
+          ),
         ),
       ),
     );

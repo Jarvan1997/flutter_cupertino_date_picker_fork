@@ -288,18 +288,20 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
       width: double.infinity,
       height: widget.pickerTheme.pickerHeight,
       decoration: BoxDecoration(color: widget.pickerTheme.backgroundColor),
-      child: CupertinoPicker.builder(
-        backgroundColor: widget.pickerTheme.backgroundColor,
-        scrollController: scrollCtrl,
-        itemExtent: widget.pickerTheme.itemHeight,
-        selectionOverlay: null,
+      child: ListWheelScrollView.useDelegate(
         diameterRatio: 1.5,
+        itemExtent: widget.pickerTheme.itemHeight,
         squeeze: 1.2,
+        physics: const FixedExtentScrollPhysics(),
+        controller: scrollCtrl,
         onSelectedItemChanged: valueChanged,
-        childCount: format.contains('m')
-            ? _calculateMinuteChildCount(valueRange, minuteDivider!)
-            : valueRange.last - valueRange.first + 1,
-        itemBuilder: builder,
+        childDelegate: ListWheelChildBuilderDelegate(
+          builder: builder,
+          childCount:
+          format.contains('m')
+              ? _calculateMinuteChildCount(valueRange, minuteDivider!)
+              : valueRange.last - valueRange.first + 1,
+        ),
       ),
     );
     return Expanded(

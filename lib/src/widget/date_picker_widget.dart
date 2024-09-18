@@ -227,21 +227,23 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         padding: EdgeInsets.all(8.0),
         height: widget.pickerTheme.pickerHeight,
         decoration: BoxDecoration(color: widget.pickerTheme.backgroundColor),
-        child: CupertinoPicker.builder(
-          backgroundColor: widget.pickerTheme.backgroundColor,
-          scrollController: scrollCtrl,
-          itemExtent: widget.pickerTheme.itemHeight,
-          selectionOverlay: null,
+        child: ListWheelScrollView.useDelegate(
           diameterRatio: 1.5,
+          itemExtent: widget.pickerTheme.itemHeight,
           squeeze: 1.2,
+          physics: const FixedExtentScrollPhysics(),
+          controller: scrollCtrl,
           onSelectedItemChanged: valueChanged,
-          childCount: valueRange?.last == null || valueRange?.first == null
-              ? null
-              : valueRange!.last - valueRange.first + 1,
-          itemBuilder: (context, index) => valueRange?.first == null
-              ? null
-              : _renderDatePickerItemComponent(
-                  valueRange!.first + index, format),
+          childDelegate: ListWheelChildBuilderDelegate(
+            builder: (context, index) => valueRange?.first == null
+                ? null
+                : _renderDatePickerItemComponent(
+                valueRange!.first + index, format),
+            childCount:
+            valueRange?.last == null || valueRange?.first == null
+                ? null
+                : valueRange!.last - valueRange.first + 1,
+          ),
         ),
       ),
     );
